@@ -2,6 +2,8 @@
 
 > 브라우저에서 Anki `.apkg` 덱을 직접 파싱하는 Frontend-Only POC
 
+**🚀 Live Demo:** https://smarthug.github.io/anki-deck-loader/
+
 ## 개요
 
 서버 없이 브라우저에서 Anki 덱 파일을 로드하고 JSON으로 변환합니다.
@@ -11,14 +13,16 @@
 - **Vite** + **React**
 - **fflate** - ZIP 해제
 - **sql.js** - SQLite WASM
-- **Web Worker** - UI freeze 방지
+- **Web Worker** - UI freeze 방지 (향후)
 
 ## 기능
 
 - `.apkg` 파일 업로드 (Drag & Drop)
 - 로딩 진행률 + 경과 시간 표시
 - 카드/노트 데이터 JSON 변환
-- iOS Safari 지원
+- 테이블/JSON 뷰 전환
+- JSON 내보내기
+- 검색 기능
 
 ## 플로우
 
@@ -47,9 +51,13 @@ npm install
 npm run dev
 ```
 
-## 문서
+http://localhost:3001 에서 확인
 
-- [PRD](./PRD.md) - 상세 요구사항
+## 빌드 & 배포
+
+```bash
+npm run build
+```
 
 ## 관련 프로젝트
 
