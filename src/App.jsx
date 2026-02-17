@@ -8,7 +8,7 @@ import './App.css'
 const STEPS = [
   '파일 읽기',
   'ZIP 해제',
-  'SQLite 추출',
+  'SQLite/미디어 추출',
   'SQLite 로딩',
   'SQL 쿼리',
   'JSON 변환',
@@ -19,8 +19,7 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState({ step: 0, percent: 0 })
   const [startTime, setStartTime] = useState(null)
-  const [elapsedTime, setElapsedTime] = useState(0)
-  const [cards, setCards] = useState(null)
+  const [result, setResult] = useState(null) // { cards, models, media }
   const [error, setError] = useState(null)
   const [fileInfo, setFileInfo] = useState(null)
 
@@ -35,38 +34,42 @@ function App() {
       return
     }
 
-    // 제한을 200MB로 상향하거나, 체크를 제거할 수 있습니다.
     if (file.size > 300 * 1024 * 1024) {
-      setError('파일 크기는 200MB 이하여야 합니다.')
+      setError('파일 크기는 300MB 이하여야 합니다.')
       return
     }
 
     // 초기화
     setError(null)
-    setCards(null)
+    setResult(null)
     setLoading(true)
     setFileInfo({ name: file.name, size: file.size })
-    setStartTime(Date.now())
-    setElapsedTime(0)
-
-    // 타이머 시작
-    const timer = setInterval(() => {
-      setElapsedTime(Date.now() - Date.now() + (Date.now() - (startTime || Date.now())))
-    }, 100)
+    const start = Date.now()
+    setStartTime(start)
 
     try {
-      const result = await parseApkg(file, updateProgress)
-      setCards(result)
+      const data = await parseApkg(file, updateProgress)
+      setResult(data)
       updateProgress(6, 100)
     } catch (err) {
       console.error('Parse error:', err)
       setError(`파싱 실패: ${err.message}`)
     } finally {
-      clearInterval(timer)
-      setElapsedTime(Date.now() - (startTime || Date.now()))
       setLoading(false)
     }
-  }, [startTime, updateProgress])
+  }, [updateProgress])
+
+  const handleReset = () => {
+    // 미디어 Blob URL 해제
+    if (result?.media) {
+      Object.values(result.media).forEach(url => {
+        URL.revokeObjectURL(url)
+      })
+    }
+    setResult(null)
+    setFileInfo(null)
+    setError(null)
+  }
 
   return (
     <div className="app">
@@ -76,7 +79,7 @@ function App() {
       </header>
 
       <main className="main">
-        {!loading && !cards && (
+        {!loading && !result && (
           <FileUpload onFileSelect={handleFileSelect} />
         )}
 
@@ -92,26 +95,33 @@ function App() {
         {error && (
           <div className="error">
             <span>❌</span> {error}
-            <button onClick={() => { setError(null); setCards(null); }}>
+            <button onClick={() => { setError(null); setResult(null); }}>
               다시 시도
             </button>
           </div>
         )}
 
-        {cards && !loading && (
+        {result && !loading && (
           <>
             <div className="result-header">
               <h2>✅ 파싱 완료</h2>
-              <p>
-                {fileInfo?.name} ({(fileInfo?.size / 1024 / 1024).toFixed(2)} MB)
-                • {cards.length}개 카드
-                • {((Date.now() - startTime) / 1000).toFixed(2)}초
-              </p>
-              <button className="reset-btn" onClick={() => { setCards(null); setFileInfo(null); }}>
+              <div className="result-stats">
+                <span>📄 {fileInfo?.name}</span>
+                <span>💾 {(fileInfo?.size / 1024 / 1024).toFixed(2)} MB</span>
+                <span>🃏 {result.cards.length}개 카드</span>
+                <span>📝 {Object.keys(result.models).length}개 노트 타입</span>
+                <span>🖼️ {Object.keys(result.media).length}개 미디어</span>
+                <span>⏱️ {((Date.now() - startTime) / 1000).toFixed(2)}초</span>
+              </div>
+              <button className="reset-btn" onClick={handleReset}>
                 다른 파일 열기
               </button>
             </div>
-            <CardViewer cards={cards} />
+            <CardViewer 
+              cards={result.cards} 
+              models={result.models}
+              media={result.media}
+            />
           </>
         )}
       </main>
