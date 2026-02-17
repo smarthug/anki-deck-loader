@@ -35,8 +35,9 @@ function App() {
       return
     }
 
-    if (file.size > 100 * 1024 * 1024) {
-      setError('파일 크기는 100MB 이하여야 합니다.')
+    // 제한을 200MB로 상향하거나, 체크를 제거할 수 있습니다.
+    if (file.size > 300 * 1024 * 1024) {
+      setError('파일 크기는 200MB 이하여야 합니다.')
       return
     }
 

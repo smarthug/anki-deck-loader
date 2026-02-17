@@ -51,7 +51,7 @@ npm install
 npm run dev
 ```
 
-http://localhost:3001 에서 확인
+http://localhost:3001/anki-deck-loader/ 에서 확인
 
 ## 빌드 & 배포
 
