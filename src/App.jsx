@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react'
 import FileUpload from './components/FileUpload'
 import ProgressBar from './components/ProgressBar'
 import CardViewer from './components/CardViewer'
+import SwipeViewer from './components/SwipeViewer'
 import { parseApkg } from './utils/ankiParser'
 import './App.css'
 
@@ -22,6 +23,7 @@ function App() {
   const [result, setResult] = useState(null) // { cards, models, media }
   const [error, setError] = useState(null)
   const [fileInfo, setFileInfo] = useState(null)
+  const [viewMode, setViewMode] = useState('list') // 'list' | 'swipe'
 
   const updateProgress = useCallback((step, percent = 100) => {
     setProgress({ step, percent })
@@ -101,7 +103,7 @@ function App() {
           </div>
         )}
 
-        {result && !loading && (
+        {result && !loading && viewMode === 'list' && (
           <>
             <div className="result-header">
               <h2>✅ 파싱 완료</h2>
@@ -113,9 +115,14 @@ function App() {
                 <span>🖼️ {Object.keys(result.media).length}개 미디어</span>
                 <span>⏱️ {((Date.now() - startTime) / 1000).toFixed(2)}초</span>
               </div>
-              <button className="reset-btn" onClick={handleReset}>
-                다른 파일 열기
-              </button>
+              <div className="action-buttons">
+                <button className="swipe-btn" onClick={() => setViewMode('swipe')}>
+                  📱 스와이프 모드로 학습
+                </button>
+                <button className="reset-btn" onClick={handleReset}>
+                  다른 파일 열기
+                </button>
+              </div>
             </div>
             <CardViewer 
               cards={result.cards} 
@@ -123,6 +130,14 @@ function App() {
               media={result.media}
             />
           </>
+        )}
+
+        {result && !loading && viewMode === 'swipe' && (
+          <SwipeViewer
+            cards={result.cards}
+            media={result.media}
+            onClose={() => setViewMode('list')}
+          />
         )}
       </main>
 

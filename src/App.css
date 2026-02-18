@@ -219,6 +219,13 @@ body {
   font-size: 0.9rem;
 }
 
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .reset-btn {
   background: #3b82f6;
   color: white;
@@ -232,6 +239,23 @@ body {
 
 .reset-btn:hover {
   background: #2563eb;
+}
+
+.swipe-btn {
+  background: #22c55e;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.swipe-btn:hover {
+  background: #16a34a;
+  transform: scale(1.02);
 }
 
 /* Card Viewer */
@@ -646,6 +670,228 @@ tr:hover {
   color: #64748b;
   font-size: 0.85rem;
   font-family: monospace;
+}
+
+/* Swipe Viewer */
+.swipe-viewer {
+  position: fixed;
+  inset: 0;
+  background: #0f172a;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+}
+
+.swipe-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #60a5fa;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
+.back-btn:hover {
+  color: #93c5fd;
+}
+
+.card-counter {
+  color: #f1f5f9;
+  font-weight: 600;
+}
+
+.swipe-hint {
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.vertical-swiper {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.horizontal-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swipe-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 15px;
+  background: #1e293b;
+  border-top: 1px solid #334155;
+}
+
+.slide-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.slide-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #334155;
+  transition: all 0.2s;
+}
+
+.slide-dots .dot.active {
+  background: #3b82f6;
+  transform: scale(1.2);
+}
+
+.slide-label {
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+/* Slide Main (Word Card) */
+.slide-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.slide-image {
+  max-width: 80%;
+  max-height: 200px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.slide-word {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.slide-meaning {
+  font-size: 1.5rem;
+  color: #94a3b8;
+  margin-bottom: 20px;
+  max-width: 80%;
+}
+
+.slide-extra {
+  font-size: 1rem;
+  color: #64748b;
+  margin-bottom: 10px;
+  max-width: 80%;
+}
+
+.slide-audio-btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.2s;
+}
+
+.slide-audio-btn:hover {
+  background: #2563eb;
+  transform: scale(1.05);
+}
+
+.slide-model {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+/* Slide Example */
+.slide-example {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 40px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+}
+
+.example-label {
+  background: #8b5cf6;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-bottom: 30px;
+}
+
+.example-sentence {
+  font-size: 1.4rem;
+  color: #f1f5f9;
+  line-height: 1.8;
+  max-width: 85%;
+  margin-bottom: 30px;
+}
+
+.example-word {
+  margin-bottom: 40px;
+}
+
+.example-word .highlight {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.placeholder-note {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px 20px;
+  border-radius: 12px;
+  max-width: 80%;
+}
+
+/* Swiper pagination override */
+.horizontal-swiper .swiper-pagination {
+  bottom: 70px !important;
+}
+
+.horizontal-swiper .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.3);
+  width: 10px;
+  height: 10px;
+}
+
+.horizontal-swiper .swiper-pagination-bullet-active {
+  background: #3b82f6;
 }
 
 /* Responsive */
