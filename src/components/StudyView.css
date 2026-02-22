@@ -418,6 +418,22 @@
 
 /* Mobile */
 @media (max-width: 480px) {
+  .study-view {
+    padding: 0;
+  }
+  
+  .study-header {
+    padding: 8px 12px;
+  }
+  
+  .study-card {
+    padding: 12px;
+  }
+  
+  .card-content {
+    max-width: 100%;
+  }
+  
   .card-word {
     font-size: 2rem;
   }
@@ -426,11 +442,42 @@
     font-size: 1.2rem;
   }
   
+  .study-controls {
+    padding: 12px;
+  }
+  
   .answer-buttons {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+  
+  .answer-btn {
+    padding: 10px 4px;
+  }
+  
+  .answer-btn .btn-label {
+    font-size: 12px;
+  }
+  
+  .answer-btn .btn-interval {
+    font-size: 10px;
   }
   
   .stats-mini {
     display: none;
+  }
+  
+  .deck-stats {
+    padding: 16px;
+  }
+  
+  .complete-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+  
+  .btn-primary, .btn-secondary {
+    width: 100%;
   }
 }
