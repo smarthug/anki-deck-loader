@@ -3,6 +3,7 @@ import FileUpload from './components/FileUpload'
 import ProgressBar from './components/ProgressBar'
 import CardViewer from './components/CardViewer'
 import SwipeViewer from './components/SwipeViewer'
+import StudyView from './components/StudyView'
 import { parseApkg } from './utils/ankiParser'
 import './App.css'
 
@@ -23,7 +24,7 @@ function App() {
   const [result, setResult] = useState(null) // { cards, models, media }
   const [error, setError] = useState(null)
   const [fileInfo, setFileInfo] = useState(null)
-  const [viewMode, setViewMode] = useState('list') // 'list' | 'swipe'
+  const [viewMode, setViewMode] = useState('list') // 'list' | 'swipe' | 'study'
 
   const updateProgress = useCallback((step, percent = 100) => {
     setProgress({ step, percent })
@@ -116,8 +117,11 @@ function App() {
                 <span>⏱️ {((Date.now() - startTime) / 1000).toFixed(2)}초</span>
               </div>
               <div className="action-buttons">
+                <button className="study-btn" onClick={() => setViewMode('study')}>
+                  🧠 SM-2 알고리즘으로 학습
+                </button>
                 <button className="swipe-btn" onClick={() => setViewMode('swipe')}>
-                  📱 스와이프 모드로 학습
+                  📱 스와이프 모드
                 </button>
                 <button className="reset-btn" onClick={handleReset}>
                   다른 파일 열기
@@ -134,6 +138,14 @@ function App() {
 
         {result && !loading && viewMode === 'swipe' && (
           <SwipeViewer
+            cards={result.cards}
+            media={result.media}
+            onClose={() => setViewMode('list')}
+          />
+        )}
+
+        {result && !loading && viewMode === 'study' && (
+          <StudyView
             cards={result.cards}
             media={result.media}
             onClose={() => setViewMode('list')}

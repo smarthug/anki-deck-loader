@@ -241,6 +241,23 @@ body {
   background: #2563eb;
 }
 
+.study-btn {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.study-btn:hover {
+  background: linear-gradient(135deg, #7c3aed, #5b21b6);
+  transform: scale(1.02);
+}
+
 .swipe-btn {
   background: #22c55e;
   color: white;
